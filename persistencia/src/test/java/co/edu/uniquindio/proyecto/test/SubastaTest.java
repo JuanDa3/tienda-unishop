@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto.test;
 
 import co.edu.uniquindio.proyecto.entidades.Subasta;
+import co.edu.uniquindio.proyecto.entidades.Usuario;
 import co.edu.uniquindio.proyecto.repositorios.SubastaRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -58,5 +59,12 @@ public class SubastaTest {
     public void listarSubastaTest() {
         List<Subasta> listaSubastas = subastaRepo.findAll();
         listaSubastas.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void usuarioGanadorTest() {
+        String ganador = subastaRepo.obtenerUsuarioGanador("1");
+        System.out.println(ganador);
     }
 }

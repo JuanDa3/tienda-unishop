@@ -104,4 +104,11 @@ public class ChatTest {
         List<Chat> chats = chatRepo.findAll();
         chats.forEach(c -> System.out.println(c));
     }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void listarChatVendedorTest(){
+        List<Chat> chats = chatRepo.listaChatsVendedor("1");
+        chats.forEach(c -> System.out.println(c));
+    }
 }

@@ -59,4 +59,21 @@ public class CompraTest {
 
         Assertions.assertEquals(3, listaCompras.size());
     }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    //Mostrar lista de compras de un usuario
+    public void listarComprasPorMP() {
+        List<Object[]>listaComprasMP = miCpRepo.cantidadComprasMP();
+
+        for(Object[] objeto: listaComprasMP){
+            System.out.println(objeto[0]+"..."+objeto[1]);
+        }
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void valorTotalComprasUsuarioTest(){
+        List<Object>comprasUsuario = miCpRepo.totalComprasUsuario("1");
+    }
 }

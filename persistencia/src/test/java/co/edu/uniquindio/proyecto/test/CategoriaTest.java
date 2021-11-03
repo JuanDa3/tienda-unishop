@@ -11,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @DataJpaTest
@@ -53,5 +54,19 @@ public class CategoriaTest {
     public void listarCategoriasTest(){
         List<Categoria>categorias = categoriaRepo.findAll();
         categorias.forEach(c -> System.out.println(c));
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void listarCatePorCalif(){
+        List<Object>categorias = categoriaRepo.listaCatePorCalif();
+        categorias.forEach(c -> System.out.println(c));
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void listaSubastaCat(){
+        List<Object>listaSubastaCat = categoriaRepo.subastaCat("electodomestico", LocalDate.of(2021, 10, 20));
+        listaSubastaCat.forEach(c -> System.out.println(c));
     }
 }

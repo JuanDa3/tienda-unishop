@@ -60,4 +60,11 @@ public class UsuarioTest {
 //      System.out.println(listaUsuarios);
         listaUsuarios.forEach(System.out::println);
     }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void listarNombreTest(){
+        List<Usuario> lista = usuarioRepo.findAllByNombreContains("Juan");
+        lista.forEach(u -> System.out.println(u));//35:16
+    }
 }

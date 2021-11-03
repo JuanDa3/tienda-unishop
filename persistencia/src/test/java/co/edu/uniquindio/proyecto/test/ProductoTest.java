@@ -11,6 +11,7 @@ import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -56,5 +57,19 @@ public class ProductoTest {
     public void listarProductoTest(){
         List<Producto> listaProductos = productoRepo.findAll();
         listaProductos.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void cantProdCategoriaTest(){
+        List<Object>listaProdCat = productoRepo.listaCategorias();
+        listaProdCat.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void productoMasVendido(){
+        Optional<Producto> producto = productoRepo.productoMasVendido("electodomestico");
+        System.out.println(producto);
     }
 }
