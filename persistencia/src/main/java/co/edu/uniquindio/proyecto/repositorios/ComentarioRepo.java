@@ -17,4 +17,10 @@ public interface ComentarioRepo extends JpaRepository<Comentario,String>
     @Query("select c from  Comentario c where c.producto.usuario.codigo = :codigoUsuario and c.respuesta is null")
     List<Comentario>listaComenNoResp();
 
+    @Query("select c from  Comentario c where c.calificacion  > :calificacionMenor and c.calificacion < :calificacionMayor")
+    List<Comentario>listaComentariosRango1(int calificacionMenor, int calificacionMayor);
+
+    @Query("select c from  Comentario c where c.calificacion between :calificacionMenor and :calificacionMayor")
+    List<Comentario>listaComentariosRango2(int calificacionMenor, int calificacionMayor);
+
 }

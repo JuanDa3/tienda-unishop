@@ -7,9 +7,14 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -65,6 +70,21 @@ public class UsuarioTest {
     @Sql("classpath:dataSet.sql")
     public void listarNombreTest(){
         List<Usuario> lista = usuarioRepo.findAllByNombreContains("Juan");
-        lista.forEach(u -> System.out.println(u));//35:16
+        lista.forEach(u -> System.out.println(u));
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void paginarListaTest(){
+        Pageable paginador = PageRequest.of(0,2);
+
+        Page<Usuario>lista = usuarioRepo.findAll(paginador);
+        System.out.println(lista.stream().collect(Collectors.toList()));
+
+        List<Usuario>lista2 = usuarioRepo.findAll(Sort.by("nombre"));
+        System.out.println(lista);
     }
 }
+
+
+//expresiones lambda lista.forEach(System.out::println)
