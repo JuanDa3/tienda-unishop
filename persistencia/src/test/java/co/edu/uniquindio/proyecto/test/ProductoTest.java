@@ -1,5 +1,6 @@
 package co.edu.uniquindio.proyecto.test;
 
+import co.edu.uniquindio.proyecto.dto.ProductoValido;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.repositorios.ProductoRepo;
 import org.junit.jupiter.api.Assertions;
@@ -10,6 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.jdbc.Sql;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -72,4 +74,24 @@ public class ProductoTest {
         Optional<Producto> producto = productoRepo.productoMasVendido("electodomestico");
         System.out.println(producto);
     }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void listarUsuariosProductosTest(){
+        List<Object[]>respuesta = productoRepo.listaProductosYComentarios();
+        //respuesta.forEach(System.out::println);
+//        for(Object[] object: respuesta){
+//            System.out.println(object[0]+"---"+object[1]);
+//        }
+        respuesta.forEach(objeto -> System.out.println(objeto[0]+"---"+objeto[1]+"---"+objeto[2]));
+        Assertions.assertEquals(4, respuesta.size());
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void listarProductosValidosTest(){
+        List<ProductoValido>productos = productoRepo.listarProductosValidos(LocalDateTime.now());
+        productos.forEach(System.out::println);
+    }
+
 }

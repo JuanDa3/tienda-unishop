@@ -1,6 +1,9 @@
 package co.edu.uniquindio.proyecto.test;
 
+import co.edu.uniquindio.proyecto.dto.UsuarioYProducto;
+import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
+import co.edu.uniquindio.proyecto.repositorios.ProductoRepo;
 import co.edu.uniquindio.proyecto.repositorios.UsuarioRepo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -22,6 +25,9 @@ public class UsuarioTest {
 
     @Autowired
     private UsuarioRepo usuarioRepo;
+
+    @Autowired
+    private ProductoRepo productoRepo;
 
     //Metodos CRUD Test
     //Test para registrar un usuario
@@ -84,6 +90,34 @@ public class UsuarioTest {
         List<Usuario>lista2 = usuarioRepo.findAll(Sort.by("nombre"));
         System.out.println(lista);
     }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void obtenerNombreVendedorTest(){
+        String nombre = productoRepo.obtenerNombreVendedor("1");
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void obtenerFavoritosUsuario(){
+        List<Producto>favoritos = usuarioRepo.obtenerProductosFavoritos("usuario@mail.com");
+        Assertions.assertEquals(2,favoritos.size());
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void listarUsuariosProductosTest(){
+        List<UsuarioYProducto>respuesta = usuarioRepo.listarUsuariosYProductos();
+        respuesta.forEach(System.out::println);
+    }
+
+    @Test
+    @Sql("classpath:dataSet.sql")
+    public void listarUsuariosComentariosTest(){
+        List<Usuario>usuarios = usuarioRepo.listarUsariosComentarios("1");
+        usuarios.forEach(System.out::println);
+    }
+
 }
 
 

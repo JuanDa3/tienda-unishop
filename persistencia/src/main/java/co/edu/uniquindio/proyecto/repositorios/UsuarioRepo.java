@@ -1,5 +1,7 @@
 package co.edu.uniquindio.proyecto.repositorios;
 
+import co.edu.uniquindio.proyecto.dto.UsuarioYProducto;
+import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,4 +33,12 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
     Optional<Usuario>findByEmailAndPassword(String email, String clave); //consulta que hace lo mismo que la anterior pero simplificada
     Page<Usuario> findAll(Pageable paginador);
     //Pageable y Sort sirven para organizar las listas cuando son muy largas
+
+    @Query("select p from Usuario u, IN (u.productoUsuarios) p where u.email = :email")
+    List<Producto>obtenerProductosFavoritos(String email);
+
+    @Query("select new co.edu.uniquindio.proyecto.dto.UsuarioYProducto(u.email, u.nombre, p) from Usuario u left join u.productoUsuarios p")
+    List<UsuarioYProducto>listarUsuariosYProductos(); //el object[] se utiliza cuando trae información de diferentes tablas
+    @Query("select distinct p.nombre, c from Producto p left join p.comentarios c where p.codigo = :id")
+    List<Usuario>listarUsariosComentarios(String id);
 }
