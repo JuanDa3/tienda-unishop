@@ -31,6 +31,7 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
 
 
     Optional<Usuario>findByEmailAndPassword(String email, String clave); //consulta que hace lo mismo que la anterior pero simplificada
+
     Page<Usuario> findAll(Pageable paginador);
     //Pageable y Sort sirven para organizar las listas cuando son muy largas
 
@@ -41,4 +42,6 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
     List<UsuarioYProducto>listarUsuariosYProductos(); //el object[] se utiliza cuando trae información de diferentes tablas
     @Query("select distinct p.nombre, c from Producto p left join p.comentarios c where p.codigo = :id")
     List<Usuario>listarUsariosComentarios(String id);
+
+    //Optional<Usuario>findByUsername(String username);
 }

@@ -21,8 +21,11 @@ public class Usuario extends Persona implements Serializable {
     private Map<String, String> numTelefonos;
 
     //Relaciones
+    @Column(length = 40)
+    private String username;
+
     @ManyToOne
-    @JoinColumn(nullable = false)
+    //@JoinColumn(nullable = false)
     private Ciudad ciudad;
 
     @OneToMany(mappedBy = "usuario")

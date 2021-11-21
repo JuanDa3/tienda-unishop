@@ -4,6 +4,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.PositiveOrZero;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
@@ -28,8 +30,11 @@ public class Producto implements Serializable {
 
     @Min(0)
     @Column(nullable = false)
-    private int unidades;
+    @PositiveOrZero
+    private Integer unidades;
 
+    @Lob
+    @NotBlank//solo funciona para string
     @Column(length = 255, nullable = false)
     private String descripcion;
 
