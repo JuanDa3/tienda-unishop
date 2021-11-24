@@ -33,7 +33,7 @@ public class ChatTest {
     @Test
     public void registrarChatTest(){
         Producto producto = Producto.builder()
-                .codigo("1").nombre("mouse gamer").unidades(5)
+                .nombre("mouse gamer").unidades(5)
                 .descripcion("mouse para juegos").precio(15000)
                 .descuento(5)
                 .fechaLimite(LocalDate.of(2021,10,20)).build();
@@ -52,7 +52,7 @@ public class ChatTest {
     @Sql("classpath:dataSet.sql")
     public void eliminarChatTest(){
         Producto producto = Producto.builder()
-                .codigo("1").nombre("mouse gamer").unidades(5)
+                .nombre("mouse gamer").unidades(5)
                 .descripcion("mouse para juegos").precio(15000)
                 .descuento(5)
                 .fechaLimite(LocalDate.of(2021,10,20)).build();
@@ -72,14 +72,14 @@ public class ChatTest {
     @Test
     public void actualizarChatTest(){
         Producto producto = Producto.builder()
-                .codigo("1").nombre("mouse gamer").unidades(5)
+                .nombre("mouse gamer").unidades(5)
                 .descripcion("mouse para juegos").precio(15000)
                 .descuento(5)
                 .fechaLimite(LocalDate.of(2021,10,20)).build();
         productoRepo.save(producto);
 
         Producto producto2 = Producto.builder()
-                .codigo("2").nombre("teclado gamer").unidades(5)
+                .nombre("teclado gamer").unidades(5)
                 .descripcion("teclado para juegos").precio(35000)
                 .descuento(10)
                 .fechaLimite(LocalDate.of(2021,10,25)).build();

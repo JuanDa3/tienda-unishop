@@ -26,7 +26,7 @@ public class ProductoTest {
     //Test para registrar un producto
     @Test
     public void regsitrarProductoTest(){
-        Producto newProducto = new Producto("4","Play Station 6", 5, "Es la mas nueva", 10000, 0, LocalDate.of(2021, 10, 20));
+        Producto newProducto = new Producto("Play Station 6", 5, "Es la mas nueva", 10000, 0, LocalDate.of(2021, 10, 20));
         Producto saveProducto = productoRepo.save(newProducto);
 
         Assertions.assertNotNull(saveProducto);

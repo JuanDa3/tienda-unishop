@@ -39,4 +39,7 @@ public interface ProductoRepo extends JpaRepository<Producto, String>{
     @Query("select new co.edu.uniquindio.proyecto.dto.ProductoValido (p.nombre, p.descripcion, p.precio, p.ciudad) from Producto p where  :fechaActual < p.fechaLimite")
     List<ProductoValido>listarProductosValidos(LocalDateTime fechaActual);
 
+    @Query("select p from Producto p where p.nombre like concat('%', :nombre, '%') ")
+    List<Producto>buscarProductoNombre(String nombre);
+
 }

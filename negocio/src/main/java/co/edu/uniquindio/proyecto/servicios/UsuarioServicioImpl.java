@@ -45,4 +45,9 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public Usuario login(String email, String password) throws Exception {
         return usuarioRepo.findByEmailAndPassword(email,password).orElseThrow(() -> new Exception(""));
     }
+
+    @Override
+    public Usuario obtenerUsuario(String codigo) throws Exception {
+        return usuarioRepo.findByCodigo(codigo).orElseThrow(() -> new Exception("El usuario no Existe"));
+    }
 }

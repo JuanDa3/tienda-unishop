@@ -22,11 +22,14 @@ public class Producto implements Serializable {
     //Atributos propios de la entidad
     @Id
     @EqualsAndHashCode.Include
-    @Column(length = 40)
-    private String codigo;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int codigo;
 
     @Column(length = 40, nullable = false)
     private String nombre;
+
+    @Column(name = "nombre_publicacion", length = 50, nullable = false)
+    private String nombrePublicacion;
 
     @Min(0)
     @Column(nullable = false)
@@ -55,10 +58,10 @@ public class Producto implements Serializable {
     //Relaciones
     @ManyToOne
     @JoinColumn(nullable = false)
-    private Usuario usuario;
+    private Usuario usuario; //cambiar este por vendedor
 
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(nullable = true)
     private Ciudad ciudad;
 
     @OneToMany(mappedBy = "producto")
@@ -87,8 +90,7 @@ public class Producto implements Serializable {
 
     //Constructor
     @Builder
-    public Producto(String codigo, String nombre, int unidades, String descripcion, int precio, int descuento, LocalDate fechaLimite) {
-        this.codigo = codigo;
+    public Producto(String nombre, int unidades, String descripcion, int precio, int descuento, LocalDate fechaLimite) {
         this.nombre = nombre;
         this.unidades = unidades;
         this.descripcion = descripcion;

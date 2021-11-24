@@ -9,6 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import javax.swing.text.html.Option;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,6 +43,8 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
     List<UsuarioYProducto>listarUsuariosYProductos(); //el object[] se utiliza cuando trae información de diferentes tablas
     @Query("select distinct p.nombre, c from Producto p left join p.comentarios c where p.codigo = :id")
     List<Usuario>listarUsariosComentarios(String id);
+
+    Optional<Usuario>findByCodigo(String codigo);
 
     //Optional<Usuario>findByUsername(String username);
 }
