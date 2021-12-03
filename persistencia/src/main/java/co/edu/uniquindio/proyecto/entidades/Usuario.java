@@ -16,9 +16,9 @@ import java.util.Map;
 public class Usuario extends Persona implements Serializable {
 
     //Atributos propios de la entidad
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @Column(nullable = false)
-    private Map<String, String> numTelefonos;
+    private List<String>telefonos;
 
     //Relaciones
     @Column(length = 40)
@@ -46,7 +46,7 @@ public class Usuario extends Persona implements Serializable {
 
     @ManyToMany(mappedBy = "usuarios")
     @ToString.Exclude
-    private List<Producto> productoUsuarios;
+    private List<Producto> productosFavoritos;
 
     @OneToMany(mappedBy = "usuario")
     @ToString.Exclude

@@ -7,3 +7,5 @@
 #Archivos de IntelliJ
 *.iml
 /.idea
+
+web/src/webapp/uploads

@@ -1,6 +1,7 @@
 package co.edu.uniquindio.proyecto.repositorios;
 
 import co.edu.uniquindio.proyecto.dto.ProductoValido;
+import co.edu.uniquindio.proyecto.entidades.Categoria;
 import co.edu.uniquindio.proyecto.entidades.Comentario;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
@@ -13,12 +14,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductoRepo extends JpaRepository<Producto, String>{
+public interface ProductoRepo extends JpaRepository<Producto, Integer>{
 
     @Query("select p from Producto p where p.usuario.codigo = :codigo")
     List<Producto>listaProductos(int codigo);
 
-    @Query("select u, p from Usuario u left join u.productoUsuarios p")
+    @Query("select p from Producto p where :categoria member of p.categorias")
+    List<Producto> listarPorCategoria(Categoria categoria);
+
+    @Query("select u, p from Usuario u left join u.productosFavoritos p")
     List<Producto>listaProductosUsuarios();
 
     @Query("select c.nombre, s.codigo, count (p.nombre) from Producto p join p.subastas s join p.categorias c group by c.nombre")

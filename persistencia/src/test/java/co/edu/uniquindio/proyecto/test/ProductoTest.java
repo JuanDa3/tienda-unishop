@@ -36,8 +36,8 @@ public class ProductoTest {
     @Test
     @Sql("classpath:dataSet.sql")
     public void eliminarProductoTest(){
-        productoRepo.deleteById("2");
-        Producto productoBorrado = productoRepo.findById("2").orElse(null);
+        productoRepo.deleteById(2);
+        Producto productoBorrado = productoRepo.findById(2).orElse(null);
 
         Assertions.assertNull(productoBorrado);
     }
@@ -45,11 +45,11 @@ public class ProductoTest {
     @Test
     @Sql("classpath:dataSet.sql")
     public void actualizarProductoTest(){
-        Producto productoGuardado = productoRepo.findById("1").orElse(null);
+        Producto productoGuardado = productoRepo.findById(1).orElse(null);
         assert productoGuardado != null;
         productoGuardado.setDescuento(0);
 
-        Producto productoUpdate = productoRepo.findById("1").orElse(null);
+        Producto productoUpdate = productoRepo.findById(1).orElse(null);
         assert productoUpdate != null;
         Assertions.assertEquals(0,productoUpdate.getDescuento());
     }

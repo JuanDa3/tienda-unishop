@@ -4,6 +4,7 @@ import co.edu.uniquindio.proyecto.entidades.*;
 import co.edu.uniquindio.proyecto.excepciones.ProductoNoEncontradoException;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ProductoServicio {
 
@@ -11,13 +12,17 @@ public interface ProductoServicio {
 
     void actualizarProducto(Producto p) throws Exception;
 
-    void eliminarProducto(String codigo) throws Exception;
+    void eliminarProducto(Integer codigo) throws Exception;
 
-    Producto obtenerProducto(String codigo) throws ProductoNoEncontradoException;
+    Producto obtenerProducto(Integer codigo) throws ProductoNoEncontradoException;
 
     List<Producto>listarProductos(Categoria categoria);
 
-    void comentarProducto(String mensaje, Integer calificacion, Usuario usuario, Producto producto) throws Exception;
+    List<Producto>listarTodosProductos();
+
+    List<Producto>listarPorCategoria(Categoria categoria);
+
+    void comentarProducto(Comentario comentario) throws Exception;
 
     void guardarProductoFavoritos(Producto producto, Usuario usuario) throws Exception;
 
@@ -28,4 +33,10 @@ public interface ProductoServicio {
     List<Producto>buscarProductos(String nombreProducto, String[] filtros);
 
     List<Producto>listarProductos(String codigoUsuario) throws Exception;
+
+    List<CategoriaEnum>listarCategorias();
+
+    CategoriaEnum obtenerCategoria(String categoria) throws Exception;
+
+    //El enum se hizo para seguir el ejemplo del profesor, se debe implementar igual que como se hizo con Ciudad
 }

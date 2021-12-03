@@ -23,7 +23,7 @@ public class Producto implements Serializable {
     @Id
     @EqualsAndHashCode.Include
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int codigo;
+    private Integer codigo;
 
     @Column(length = 40, nullable = false)
     private String nombre;
@@ -53,7 +53,7 @@ public class Producto implements Serializable {
 
     @ElementCollection
     @Column(nullable = true)
-    private Map<String, String> imagenes;
+    private List<String> imagenes;
 
     //Relaciones
     @ManyToOne
@@ -97,6 +97,13 @@ public class Producto implements Serializable {
         this.precio = precio;
         this.descuento = descuento;
         this.fechaLimite = fechaLimite;
+    }
+
+    public String getImagenPrincipal(){
+        if (imagenes != null && !imagenes.isEmpty()){
+            return imagenes.get(0);
+        }
+        return "default.png";
     }
 }
 

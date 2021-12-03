@@ -50,4 +50,9 @@ public class UsuarioServicioImpl implements UsuarioServicio {
     public Usuario obtenerUsuario(String codigo) throws Exception {
         return usuarioRepo.findByCodigo(codigo).orElseThrow(() -> new Exception("El usuario no Existe"));
     }
+
+    @Override
+    public Usuario iniciarSesion(String email, String password) throws Exception {
+        return usuarioRepo.findByEmailAndPassword(email,password).orElseThrow(() -> new Exception("Los datos de autenticación son incorrectos"));
+    }
 }

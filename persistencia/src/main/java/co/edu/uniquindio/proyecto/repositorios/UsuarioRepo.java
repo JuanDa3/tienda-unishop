@@ -23,7 +23,7 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
     List<Usuario>findAllByNombreContains(String nombre);
     Optional<Usuario>findByEmail(String email); //el optional sirve para que el retorno no sea null devuelve optional.empty
 
-    @Query("select u.productoUsuarios from Usuario u where u.codigo = :codigo")
+    @Query("select u.productosFavoritos from Usuario u where u.codigo = :codigo")
     List<Usuario>listaFavoritos(String codigo);
 
 
@@ -36,10 +36,10 @@ public interface UsuarioRepo extends JpaRepository<Usuario, String> {
     Page<Usuario> findAll(Pageable paginador);
     //Pageable y Sort sirven para organizar las listas cuando son muy largas
 
-    @Query("select p from Usuario u, IN (u.productoUsuarios) p where u.email = :email")
+    @Query("select p from Usuario u, IN (u.productosFavoritos) p where u.email = :email")
     List<Producto>obtenerProductosFavoritos(String email);
 
-    @Query("select new co.edu.uniquindio.proyecto.dto.UsuarioYProducto(u.email, u.nombre, p) from Usuario u left join u.productoUsuarios p")
+    @Query("select new co.edu.uniquindio.proyecto.dto.UsuarioYProducto(u.email, u.nombre, p) from Usuario u left join u.productosFavoritos p")
     List<UsuarioYProducto>listarUsuariosYProductos(); //el object[] se utiliza cuando trae información de diferentes tablas
     @Query("select distinct p.nombre, c from Producto p left join p.comentarios c where p.codigo = :id")
     List<Usuario>listarUsariosComentarios(String id);
