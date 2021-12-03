@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 
 @Scope("session")
@@ -31,9 +32,10 @@ public class SeguridadBean {
             try {
                 usuarioSesion = usuarioServicio.iniciarSesion(email,password);
                 autenticado = true;
-                return "index?faces-redirect=true";
+                return "/index?faces-redirect=true";
             } catch (Exception e) {
-                e.printStackTrace();
+                FacesMessage fm = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Alerta", e.getMessage());
+                FacesContext.getCurrentInstance().addMessage("login-bean", fm);
             }
         }
         return null;

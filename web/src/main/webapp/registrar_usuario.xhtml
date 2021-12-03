@@ -23,12 +23,15 @@
 
                     <p:outputLabel value="Nombre: " for="nombre_usuario"/>
                     <p:inputText id="nombre_usuario" value="#{usuarioBean.usuario.nombre}" required="true"/>
-
-                    <p:outputLabel value="Contraseña: " for="password_usuario"/>
-                    <p:password id="password_usuario" value="#{usuarioBean.usuario.password}" required="true"/>
+                    <p:message for="nombre_usuario"/>
 
                     <p:outputLabel value="Username: " for="username_usuario"/>
                     <p:inputText id="username_usuario" value="#{usuarioBean.usuario.username}" required="true"/>
+                    <p:message for="username_usuario"/>
+
+                    <p:outputLabel value="Contraseña: " for="password_usuario"/>
+                    <p:password id="password_usuario" value="#{usuarioBean.usuario.password}" required="true"/>
+                    <p:message for="password_usuario"/>
 
                     <p:outputLabel value="Ciudad: " for="ciudad_u"/>
                     <p:selectOneMenu id="ciudad_u" value="#{usuarioBean.usuario.ciudad}" converter="#{ciudadConverter}" >

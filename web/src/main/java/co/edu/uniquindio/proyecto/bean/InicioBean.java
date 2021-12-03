@@ -7,8 +7,10 @@ import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -21,12 +23,13 @@ public class InicioBean implements Serializable {
     @Getter @Setter
     private List<Producto>productos;
 
+    @PostConstruct
     public void inicializar() throws Exception {
         this.productos = productoServicio.listarTodosProductos();
     }
 
     public String irADetalle(String id){
-        return "/detalleProducto?faces-redirect=true&amp;producto="+id;
+        return "/detalle_producto?faces-redirect=true&amp;producto="+id;
     }
     //34:40
 }

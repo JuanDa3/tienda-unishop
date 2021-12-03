@@ -1,8 +1,9 @@
 package co.edu.uniquindio.proyecto.bean;
 
-import co.edu.uniquindio.proyecto.entidades.CategoriaEnum;
+import co.edu.uniquindio.proyecto.entidades.Categoria;
 import co.edu.uniquindio.proyecto.entidades.Producto;
 import co.edu.uniquindio.proyecto.entidades.Usuario;
+import co.edu.uniquindio.proyecto.servicios.CategoriaServicio;
 import co.edu.uniquindio.proyecto.servicios.ProductoServicio;
 import co.edu.uniquindio.proyecto.servicios.UsuarioServicio;
 import lombok.Getter;
@@ -10,7 +11,6 @@ import lombok.Setter;
 import org.apache.commons.io.IOUtils;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.file.UploadedFile;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +20,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import java.io.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,11 +30,11 @@ public class ProductoBean implements Serializable {
     @Getter @Setter
     private Producto producto;
 
-    @Autowired
-    private ProductoServicio productoServicio;
+    private final ProductoServicio productoServicio;
 
-    @Autowired
-    private UsuarioServicio usuarioServicio;
+    private final UsuarioServicio usuarioServicio;
+
+    private final CategoriaServicio categoriaServicio;
 
     private ArrayList<String> imagenes;
 
@@ -43,27 +42,39 @@ public class ProductoBean implements Serializable {
     private String urlUploads;
 
     @Getter @Setter
-    private List<CategoriaEnum>categorias;
+    private List<Categoria>categorias;
+
+    @Value("#{seguridadBean.usuarioSesion}")
+    private Usuario usuarioSesion;
+
+    public ProductoBean(ProductoServicio productoServicio, UsuarioServicio usuarioServicio, CategoriaServicio categoriaServicio) {
+        this.productoServicio = productoServicio;
+        this.usuarioServicio = usuarioServicio;
+        this.categoriaServicio = categoriaServicio;
+    }
 
     @PostConstruct
     public void inicializar(){
         this.producto = new Producto();
         this.imagenes = new ArrayList<>();
-        categorias = productoServicio.listarCategorias();
+        categorias = categoriaServicio.listaCategorias();
+
     }
 
     public void crearProducto(){
         try {
-            if(!imagenes.isEmpty()){
-                Usuario usuario = usuarioServicio.obtenerUsuario("123");
-                producto.setUsuario(usuario);
-                producto.setImagenes(imagenes);
-                producto.setFechaLimite(LocalDate.now().plusMonths(2));
-                productoServicio.publicarProducto(producto);
+            if(usuarioSesion != null){
+                if(!imagenes.isEmpty()){
+                    producto.setUsuario(usuarioSesion);
+                    producto.setImagenes(imagenes);
+                    producto.setFechaLimite(LocalDate.now().plusMonths(2));
+                    productoServicio.publicarProducto(producto);
 
-                FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,"Alerta","Producto creado");
-                FacesContext.getCurrentInstance().addMessage(null,facesMessage);
-            }else{
+                    FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_INFO,"Alerta","Producto creado");
+                    FacesContext.getCurrentInstance().addMessage(null,facesMessage);
+                }
+            }
+            else{
                 FacesMessage facesMessage = new FacesMessage(FacesMessage.SEVERITY_WARN,"Alerta","Es necesario subir al menos una imagen");
                 FacesContext.getCurrentInstance().addMessage(null,facesMessage);
             }

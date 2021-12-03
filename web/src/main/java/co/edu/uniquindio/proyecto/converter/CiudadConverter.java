@@ -24,7 +24,7 @@ public class CiudadConverter implements Converter<Ciudad>, Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return ciudad;
     }
 
     @Override
